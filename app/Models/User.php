@@ -4,10 +4,24 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Class User
+ * @package App\Models
+ *
+ * @property-read int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * Relations
+ * @property-read ShortLink[]|Collection $shortLinks
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,4 +56,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function shortLinks(): HasMany
+    {
+        return $this->hasMany(ShortLink::class);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    public function setPasswordAttribute(string $value): string
+    {
+       return $this->attributes['password'] = Hash::make($value);
+    }
 }
