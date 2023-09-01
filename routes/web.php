@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', )->name('register');
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/register', 'registerPage')->name('register');
+    Route::get('/login', 'loginPage')->name('login');
+    Route::post('/login', 'login')->name('auth');
+});
+
+Route::post('/register', [UserController::class, 'store'])->name('user.store');
+
+Route::get('/test', [HomeController::class, 'shortenLink']);
+
+Route::get('/{shortUtl}', [HomeController::class, 'redirectToUrl']);
