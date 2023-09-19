@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ShortLink;
 use Exception;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {

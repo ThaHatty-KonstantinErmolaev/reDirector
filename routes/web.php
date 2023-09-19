@@ -32,3 +32,7 @@ Route::post('/register', [UserController::class, 'store'])->name('user.store');
 Route::get('/test', [HomeController::class, 'shortenLink']);
 
 Route::get('/{shortUtl}', [HomeController::class, 'redirectToUrl']);
+
+Route::middleware('auth.basic')->group(function () {
+
+});
